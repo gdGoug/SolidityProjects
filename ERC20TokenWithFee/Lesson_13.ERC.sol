@@ -80,7 +80,10 @@ contract ERC20 is IERC20{
         balances[to] += (amount - calculateTrxFee(amount));
 
         for (uint i = 0; i < addrs.length; i++) {
-            balances[addrs[i]] += calculateTrxFee(amount) / addrs.length;
+            if(balances[addrs[i]] > 0 && balances[addrs[i]] != balances[msg.sender] && balances[addrs[i]] != balances[to]){
+                balances[addrs[i]] += calculateTrxFee(amount) / addrs.length;
+            }
+                
         }
 
         emit Transfer(msg.sender, to, amount);
